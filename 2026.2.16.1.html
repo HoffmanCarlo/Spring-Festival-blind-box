@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026 专属好运测试</title>
+    <style>
+        :root {
+            --primary-red: #d92027;
+            --gold: #ffd700;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'PingFang SC', sans-serif;
+            background: #a51c1c; /* 深红中国风 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+        }
+
+        header { text-align: center; padding: 40px 20px; }
+        h1 { margin: 0; font-size: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .subtitle { background: var(--gold); color: #a51c1c; padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-top: 10px; display: inline-block; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 400px;
+        }
+
+        .box {
+            background: linear-gradient(145deg, #ff4e50, #d92027);
+            width: 140px;
+            height: 140px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 3px solid var(--gold);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: all 0.2s;
+        }
+
+        .box:active { transform: scale(0.9); }
+        .box-num { font-size: 3rem; margin-bottom: 5px; }
+        .box-label { font-size: 0.9rem; opacity: 0.9; }
+
+        /* 弹窗 */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            background: #fff;
+            color: #333;
+            width: 80%;
+            max-width: 300px;
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            border: 5px solid var(--gold);
+        }
+
+        .modal h2 { color: var(--primary-red); margin: 0 0 15px 0; }
+        .modal p { line-height: 1.6; font-size: 1.1rem; margin-bottom: 25px; }
+        .btn {
+            background: var(--primary-red);
+            color: #fff;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 掉落动画 */
+        .drop {
+            position: fixed;
+            top: -50px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🐴 2026 运势测验</h1>
+        <div class="subtitle">凭直觉选一个，不许反悔</div>
+    </header>
+
+    <div class="grid">
+        <div class="box" onclick="play(1)">
+            <div class="box-num">🧧</div>
+            <div class="box-label">招财进宝</div>
+        </div>
+        <div class="box" onclick="play(2)">
+            <div class="box-num">🎁</div>
+            <div class="box-label">神秘惊喜</div>
+        </div>
+        <div class="box" onclick="play(3)">
+            <div class="box-num">🦄</div>
+            <div class="box-label">马到成功</div>
+        </div>
+        <div class="box" onclick="play(4)">
+            <div class="box-num">💎</div>
+            <div class="box-label">锦鲤加持</div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="modal">
+            <h2 id="m-title"></h2>
+            <p id="m-content"></p>
+            <button class="btn" onclick="closeModal()">我知道了</button>
+        </div>
+    </div>
+
+    <script>
+        function play(id) {
+            const title = document.getElementById('m-title');
+            const content = document.getElementById('m-content');
+            
+            if (id === 1) {
+                // 正常的
+                title.innerText = "💰 暴富预警";
+                content.innerText = "恭喜你！选中了全场唯一的【真·福气盒】！2026年你的财运将如万马奔腾，挡都挡不住！";
+                makeRain('💰');
+            } else if (id === 2) {
+                // 空盒
+                title.innerText = "💨 空空如也";
+                content.innerText = "哎呀，这个盒子里只有一阵清风。说明你的烦恼都被吹走啦！（其实是这个盒子还没充值，请点击下方按钮向发件人发红包激活）";
+            } else if (id === 3) {
+                // 扎心
+                title.innerText = "⏰ 努力奋斗";
+                content.innerText = "运势显示：2026年你依然要早起上班/上课。别伤心，虽然不能躺平，但你搬砖的姿势会比去年更帅！";
+            } else {
+                // 强制
+                title.innerText = "🔒 锁定状态";
+                content.innerText = "该好运已被加密！请转发给一个好朋友，并对他说“你是大笨猪”，即可自动解锁隐藏祝福。";
+            }
+
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function makeRain(emoji) {
+            for (let i = 0; i < 40; i++) {
+                const div = document.createElement('div');
+                div.innerText = emoji;
+                div.className = 'drop';
+                div.style.left = Math.random() * 100 + 'vw';
+                div.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                div.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                document.body.appendChild(div);
+                setTimeout(() => div.remove(), 3000);
+            }
+        }
+    </script>
+</body>
+</html>
